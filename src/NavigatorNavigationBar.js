@@ -160,8 +160,8 @@ class NavigatorNavigationBar extends React.Component {
     };
     var navState = this.props.navState;
     var components = navState.routeStack.map((route, index) =>
-      COMPONENT_NAMES.map(componentName =>
-        this._getComponent(componentName, route, index)
+      COMPONENT_NAMES.map((componentName, index2) =>
+        this._getComponent(componentName, route, index, index2)
       )
     );
 
@@ -174,7 +174,7 @@ class NavigatorNavigationBar extends React.Component {
     );
   }
 
-  _getComponent = (/*string*/componentName, /*object*/route, /*number*/index) => /*?Object*/ {
+  _getComponent = (/*string*/componentName, /*object*/route, /*number*/index, /*number*/index2) => /*?Object*/ {
     if (this._descriptors[componentName].includes(route)) {
       return this._descriptors[componentName].get(route);
     }
@@ -197,6 +197,7 @@ class NavigatorNavigationBar extends React.Component {
       this.props.navigationStyles.Stages.Left;
     rendered = (
       <View
+        key={index + ':' + index2}
         ref={(ref) => {
           this._components[componentName] = this._components[componentName].set(route, ref);
         }}
